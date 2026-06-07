@@ -11,6 +11,16 @@ def create(config):
     config["master_password"] = hashed_password
     json.dump(config, open("config.json", "w"))
     return config
+
+def login (config):
+    print("enter password")
+    password = input()
+    hashed_password = hashlib.sha256 (password.encode()).hexdigest()
+    if config["master_password"] == hashed_password:
+        return True
+    else:
+        return False
+
 config = {}
 
 #encryption key|binary data
@@ -27,14 +37,7 @@ if os.path.exists('config.json'):
 else:
     create(config)
 
-def login (config):
-    print("enter password")
-    password = input()
-    hashed_password = hashlib.sha256 (password.encode()).hexdigest()
-    if config["master_password"] == hashed_password:
-        return True
-    else:
-        return False
+
 logged_in = login(config)
 if logged_in:
     print("logged in")
@@ -47,12 +50,12 @@ if logged_in:
         encrypted_password = fernet.encrypt(password.encode())
         config[platform] = encrypted_password.decode()
         json.dump(config, open("config.json", "w"))
-    if action == "remove":
+    elif action == "remove":
         print("enter account platform")
         platform = input()
         del config[platform]
         json.dump(config, open("config.json", "w"))
-    if action == "see":
+    elif action == "see":
         print("enter account platform")
         platform = input()
         print(f"password: {fernet.decrypt(config[platform].encode()).decode()}")
