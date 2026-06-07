@@ -7,7 +7,7 @@ def check_firewall_rules(ip, rules):
     for rule_ip, action in rules.items():
         if ip == rule_ip:
             return action
-        return "allow"
+    return "allow"
 
 
 def main():
