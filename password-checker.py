@@ -1,7 +1,6 @@
 # My first cyber project && first py project
 # simple password checker
 
-print("Hi! I am password checker.")
 print("Enter your password and let's see how secure it is.")
 password = input("Enter your password: ")
 
